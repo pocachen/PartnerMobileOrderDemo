@@ -15,13 +15,10 @@ class ViewController: UIViewController, QLiEERMobileSDKDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let deviceToken = UserDefaults.standard.object(forKey: "deviceToken") as? String ?? ""
         // Do any additional setup after loading the view, typically from a nib.
         QLiEERMobileSDK.set(environment: .Stage)
-        QLiEERMobileSDK.launchMobileViewController(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZUlkIjoiODFkNDliOTAtOTY5NC0xMWU3LTg0NmItMWYzZTliYmM4MWMxIiwidXNlcklkIjoiY2I4NmUzOTEtODBhZi00ZGQ2LTg4ODctYzg1ZjNmYTg4ZTg0IiwiaWF0IjoxNTU5NTQ4MDk4LCJleHAiOjE1NTk1NDgyNzh9.UoPKj18Rl3svjXzy7bbqjkqEK7oljcXx3Uzv98OgFok", deviceToken: "", pushType: .inline,
-                                                   withCancelBtn: true,
-                                                   orderSortType: OrderSortType.ReservationTime,
-                                                   mobileSDKDelegate: self, completion: { result, vc in
+        QLiEERMobileSDK.launchMobileViewController(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZUlkIjoiODFkNDliOTAtOTY5NC0xMWU3LTg0NmItMWYzZTliYmM4MWMxIiwidXNlcklkIjoiZjQwMWEzNjAtYTIzMy0xMWU4LThhNDItYmIxOTY4ODNlMDIyIiwiaWF0IjoxNTcyODU4MTEyLCJleHAiOjE1NzI4NTgyOTJ9.hgdETOK2V-S6n3wflcDqC_9bxGQz9NWK8j8U8TjwAzE", deviceToken: deviceToken, pushType: .inline, withCancelBtn: true, mobileSDKDelegate: self, completion: { result, vc in
                 // 結果為0代表正常
                 if result == 0 {
                     QLiEERMobileSDK.start()
@@ -50,22 +47,6 @@ class ViewController: UIViewController, QLiEERMobileSDKDelegate {
     
     func tokenInvalid() {
         // token失效後，需重新launch並塞入新的token
-        let accessToken =  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZUlkIjoiODFkNDliOTAtOTY5NC0xMWU3LTg0NmItMWYzZTliYmM4MWMxIiwidXNlcklkIjoiY2I4NmUzOTEtODBhZi00ZGQ2LTg4ODctYzg1ZjNmYTg4ZTg0IiwiaWF0IjoxNTU5NTQ4MDk4LCJleHAiOjE1NTk1NDgyNzh9.UoPKj18Rl3svjXzy7bbqjkqEK7oljcXx3Uzv98OgFok"
-        let deviceToken = UserDefaults.standard.object(forKey: "deviceToken") as? String ?? ""
-        QLiEERMobileSDK.launchMobileViewController(accessToken: accessToken,
-                                                   deviceToken: deviceToken,
-                                                   pushType: .inline,
-                                                   withCancelBtn: true,
-                                                   orderSortType: OrderSortType.CreateTime,
-                                                   mobileSDKDelegate: self,
-                                                   completion: { result, vc in
-                                                    if result == 0 {
-                                                        QLiEERMobileSDK.start()
-                                                        self.present(vc!, animated: true, completion: nil)
-                                                    }else{
-                                                        print("登入有誤")
-                                                    }
-        })
     }
     
     override func didReceiveMemoryWarning() {
